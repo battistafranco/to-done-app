@@ -16,6 +16,10 @@ header {
   display: flex;
 }
 
+.nav-item {
+  margin: 5px;
+}
+
 .icon {
   vertical-align: middle;
   margin-top: auto;

@@ -2,19 +2,30 @@ import { ToastrService } from 'ngx-toastr';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { Todo } from '../models/todo';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TodosService {
+  private _selectedTodo$ = new BehaviorSubject(null);
+  public readonly selectedTodo$: Observable<
+    Todo
+  > = this._selectedTodo$.asObservable();
+
   constructor(private afs: AngularFirestore, private toastr: ToastrService) {}
+
+  setTodo(data) {
+    this._selectedTodo$.next(data);
+  }
 
   saveTodo(data) {
     this.afs
       .collection('todos')
       .add(data)
       .then((ref) => {
-        this.toastr.success('New Todo Saved Succesfully');
+        this.toastr.success('New Task Saved Succesfully');
       });
   }
 
@@ -34,13 +45,27 @@ export class TodosService {
       );
   }
 
+  getTodoById(id: string) {
+    return this.afs
+      .collection('todos')
+      .doc(id)
+      .get()
+      .pipe(
+        map((res) => {
+          let todo = res.data();
+          this.setTodo(todo);
+          return todo;
+        })
+      );
+  }
+
   updateTodo(todoId: string, updateData: string) {
     this.afs
       .collection('todos')
       .doc(todoId)
       .update({ todo: updateData })
       .then(() => {
-        this.toastr.success('Todo Updated Successfully');
+        this.toastr.success('Task Updated Successfully');
       });
   }
 
@@ -50,8 +75,7 @@ export class TodosService {
       .doc(todoId)
       .delete()
       .then(() => {
-        //this.afs.doc('categories/' + catId).update({todoCount: firestore.FieldValue.increment(-1)});
-        this.toastr.error('Todo Deleted Successfully');
+        this.toastr.error('Task Deleted Successfully');
       });
   }
 
@@ -61,7 +85,7 @@ export class TodosService {
       .doc(todoId)
       .update({ isCompleted: true })
       .then(() => {
-        this.toastr.info('Todo Marked Completed');
+        this.toastr.info('Task Marked Completed');
       });
   }
 
@@ -71,7 +95,7 @@ export class TodosService {
       .doc(todoId)
       .update({ isCompleted: false })
       .then(() => {
-        this.toastr.warning('Todo Marked Uncompleted');
+        this.toastr.warning('Task Marked Uncompleted');
       });
   }
 }

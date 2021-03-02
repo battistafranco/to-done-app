@@ -1,3 +1,4 @@
+import { ACTIONS } from './../../models/layout';
 import { TodosService } from './../../services/todos.service';
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
@@ -18,7 +19,8 @@ export class AddTodoComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.layoutService.showAddButton(false);
+    this.layoutService.setLayout(ACTIONS.ADD_TODO);
+    this.todosService.setTodo(null);
   }
 
   addNewTask(task) {

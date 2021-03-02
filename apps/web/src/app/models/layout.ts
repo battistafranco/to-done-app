@@ -1,0 +1,6 @@
+export enum ACTIONS {
+  LIST_TODO,
+  ADD_TODO,
+  DETAILS_TODO,
+  EDIT_TODO,
+}

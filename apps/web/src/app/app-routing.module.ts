@@ -31,9 +31,22 @@ const routes: Routes = [
         (m) => m.AddTodoModule
       ),
     data: {
-      preload: true,
+      preload: false,
       title: 'Add Task',
       activeSection: 'todo',
+    },
+    // canActivate: [AuthGuard],
+  },
+  {
+    path: 'details/:id',
+    loadChildren: () =>
+      import('./components/todo-details/todo-details.module').then(
+        (m) => m.TodoDetailsModule
+      ),
+    data: {
+      preload: false,
+      title: 'Task Details',
+      activeSection: 'details',
     },
     // canActivate: [AuthGuard],
   },

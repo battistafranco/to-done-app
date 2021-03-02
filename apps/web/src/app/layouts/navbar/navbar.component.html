@@ -1,37 +1,78 @@
 <nav class="navbar navbar-light bg-light">
   <div class="container-fluid">
-    <div class="navbar-brand">
+    <div (click)="goTo('/')" class="navbar-brand">
       <span class="icon">
         <tdn-ui-icon iconColor="green" name="logo"></tdn-ui-icon>
       </span>
 
-      <h5 (click)="goTo('/')" class="text-primary brand">Todo App</h5>
+      <h5 class="text-primary brand">To Done</h5>
     </div>
-
+    <div class="nav justify-content">
+      <h5>{{ title$ | async }}</h5>
+    </div>
     <ul class="nav justify-content-end actions">
-      <ng-container *ngIf="showAddButton$ | async; else actionsButtons">
+      <ng-container *ngIf="showAddButton$ | async">
         <li class="nav-item">
           <a
             routerLinkActive="active"
             (click)="goTo('add')"
             routerLink="/add"
-            class="nav-link active btn btn-primary"
+            class="nav-link active btn btn-success"
             aria-current="page"
-            href="#"
-            >Add Todo</a
+            >Add Task</a
           >
         </li>
       </ng-container>
-      <ng-template #actionsButtons>
+      <ng-container *ngIf="showEditButtons$ | async">
         <li class="nav-item">
           <a
             routerLinkActive="active"
-            (click)="goTo('/')"
-            class="btn btn-primary"
-            >Todos</a
+            routerLink="/"
+            class="nav-link active btn btn-light"
+            aria-current="cancel"
+            >Cancel</a
           >
         </li>
-      </ng-template>
+        <li *ngIf="selectedTodo$ | async" class="nav-item">
+          <a
+            routerLinkActive="active"
+            (click)="deleteTodo()"
+            class="nav-link active btn btn-danger"
+            aria-current="delete"
+            >Delete</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            routerLinkActive="active"
+            (click)="saveTodo()"
+            class="nav-link active btn btn-success"
+            aria-current="save"
+            >Save</a
+          >
+        </li>
+      </ng-container>
+      <ng-container *ngIf="showDetailsButtons$ | async">
+        <li class="nav-item">
+          <a
+            routerLinkActive="active"
+            (click)="goTo('edit')"
+            class="nav-link active btn btn-light"
+            aria-current="Edit"
+            >Edit</a
+          >
+        </li>
+
+        <li class="nav-item">
+          <a
+            routerLinkActive="active"
+            (click)="completeTodo()"
+            class="nav-link active btn btn-success"
+            aria-current="complete"
+            >Mark as Complete</a
+          >
+        </li>
+      </ng-container>
     </ul>
   </div>
 </nav>

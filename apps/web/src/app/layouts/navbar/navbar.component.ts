@@ -1,3 +1,4 @@
+import { TodosService } from './../../services/todos.service';
 import { LayoutService } from './../../services/layout.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -9,18 +10,20 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   showAddButton$ = this.layoutService.showAddButton$;
-  constructor(private layoutService: LayoutService, private router: Router) {}
+  showEditButtons$ = this.layoutService.showEditButtons$;
+  showDetailsButtons$ = this.layoutService.showDetailsButtons$;
+  selectedTodo$ = this.todosService.selectedTodo$;
+  title$ = this.layoutService.title$;
 
-  ngOnInit(): void {
-    this.toogleButtons(true);
-  }
+  constructor(
+    private layoutService: LayoutService,
+    private router: Router,
+    private todosService: TodosService
+  ) {}
+
+  ngOnInit(): void {}
 
   goTo(route) {
-    this.toogleButtons(route !== 'add');
     this.router.navigate([route]);
-  }
-
-  toogleButtons(value) {
-    this.layoutService.showAddButton(value);
   }
 }
