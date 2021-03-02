@@ -1,0 +1,27 @@
+header {
+  height: 50px;
+}
+
+.brand {
+  background-color: #fff;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.container-fluid {
+  border-bottom: 1pz solid grey;
+}
+
+.navbar-brand {
+  display: flex;
+}
+
+.icon {
+  vertical-align: middle;
+  margin-top: auto;
+}
+
+.actions {
+  float: right;
+  margin-top: auto;
+}

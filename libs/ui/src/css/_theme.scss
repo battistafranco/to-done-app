@@ -1,0 +1,118 @@
+@use "sass:color";
+
+:root {
+  // Background
+  --app-bg-color-primary: var(--color-neutral-90);
+  --app-bg-color-secondary: var(--color-neutral-100);
+
+  // States
+  --app-state-color-focus: var(--color-blue);
+  --app-state-color-danger: var(--color-red);
+
+  // Border
+  --app-border-color: var(--color-neutral-50);
+  --app-border-color-focus: var(--app-state-color--focus);
+  --app-border-color-invalid: var(--app-state-color--danger);
+
+  // Text
+  --app-text-primary: var(--color-neutral-10);
+  --app-text-secondary: var(--color-neutral-25);
+  --app-text-invalid: var(--app-state-color-danger);
+}
+
+// Force the body element to primary color for theme.
+html {
+  body {
+    background: var(--bg-color-primary);
+  }
+}
+
+$colors: (
+  'green': (
+    base: #34aa44,
+  ),
+  'blue': (
+    base: #1665d8,
+  ),
+  'purple': (
+    base: #6758f3,
+  ),
+  'orange': (
+    base: #f6ab2f,
+  ),
+  'red': (
+    base: #e73c1e,
+  ),
+);
+
+$neutrals: (
+  'neutral-0': (
+    base: #000,
+  ),
+  'neutral-10': (
+    base: #3e3f42,
+  ),
+  'neutral-25': (
+    base: #9ea0a5,
+  ),
+  'neutral-50': (
+    base: #eaedf3,
+  ),
+  'neutral-90': (
+    base: #fbfbfd,
+  ),
+  'neutral-100': (
+    base: #fff,
+  ),
+);
+
+@function convertRGB($color) {
+  @return unquote('#{red($color)}, #{green($color)}, #{blue($color)}');
+}
+
+// Colors
+@each $name, $color in $colors {
+  $varName: --color-#{$name};
+
+  $baseColor: map-get($color, base);
+
+  $shadeColor: map-get($color, shade);
+  $tintColor: map-get($color, tint);
+
+  :root {
+    @if ($shadeColor) {
+      #{$varName}-shade: $shadeColor;
+    } @else {
+      #{$varName}-shade: color.scale($baseColor, $lightness: -12%);
+    }
+
+    #{$varName}: #{$baseColor};
+    #{$varName}-rgb: convertRGB($baseColor);
+
+    @if ($tintColor) {
+      #{$varName}-tint: $tintColor;
+    } @else {
+      #{$varName}-tint: color.change($baseColor, $lightness: 80%);
+    }
+  }
+
+  .color-#{$name} {
+    color: var(#{$varName});
+  }
+}
+
+// Neutrals
+@each $name, $neutral in $neutrals {
+  $varName: --color-#{$name};
+
+  $baseColor: map-get($neutral, base);
+
+  :root {
+    #{$varName}: #{$baseColor};
+    #{$varName}-rgb: convertRGB($baseColor);
+  }
+
+  .color-#{$name} {
+    color: var(#{$varName});
+  }
+}

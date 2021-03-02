@@ -1,0 +1,33 @@
+<div style="text-align: center" *ngIf="percentage | async as pct">
+  <progress class="progress is-info" [value]="pct" max="100"></progress>
+
+  <span>{{ pct | number }}%</span>
+</div>
+
+<div style="text-align: center" *ngIf="snapshot | async as snap">
+  <div style="text-align: center" *ngIf="downloadURL as url">
+    <img [src]="url" />
+  </div>
+
+  <!-- <button
+    (click)="task.pause()"
+    class="button is-warning"
+    [disabled]="!isActive(snap)"
+  >
+    Pause
+  </button>
+  <button
+    (click)="task.cancel()"
+    class="button is-danger"
+    [disabled]="!isActive(snap)"
+  >
+    Cancel
+  </button>
+  <button
+    (click)="task.resume()"
+    class="button is-info"
+    [disabled]="!(snap?.state === 'paused')"
+  >
+    Resume
+  </button> -->
+</div>

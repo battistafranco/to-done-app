@@ -1,0 +1,79 @@
+// .card-image {
+//   // min-width: 299px;
+//   // max-width: 299px;
+//   position: absolute;
+//   top: 10px;
+//   left: 10px;
+// }
+
+// .card {
+//   width: 400px;
+// }
+
+.chipList {
+  margin: 5px;
+}
+
+// .icon {
+//   vertical-align: middle;
+// }
+
+// .label {
+//   margin-left: 5px;
+//   vertical-align: middle;
+// }
+
+// .card-image-header {
+//   width: 200px;
+//   height: 100px;
+//   overflow: hidden;
+//   position: relative;
+// }
+
+.card-img {
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.card-wrapper {
+  overflow: hidden;
+  max-height: 100px;
+}
+
+.card-title {
+  margin-bottom: 0.3rem;
+  font-size: medium;
+}
+
+.cat {
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.fa-users {
+  margin-left: 1rem;
+}
+
+.card-footer {
+  font-size: 0.8rem;
+}
+
+.labels {
+  margin: 3px;
+}
+
+.card-text {
+  color: grey;
+  font-size: smaller;
+  min-height: 100px;
+}
+
+.footer-text {
+  vertical-align: super;
+  margin-left: 5px;
+}
+@media (max-width: 576.98px) {
+  .col-xs-12 {
+    width: 100%;
+  }
+}

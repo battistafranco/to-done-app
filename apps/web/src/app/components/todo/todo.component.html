@@ -1,0 +1,76 @@
+<p>todo works!</p>
+<div class="container">
+  <div class="row col-12">
+    <ng-container *ngFor="let todo of todos$ | async">
+      <div class="col-4 col-xs-12 col-sm-12 col-md-6 col-lg-4">
+        <div class="card">
+          <div class="card-wrapper">
+            <img
+              class="card-img"
+              [src]="
+                sanitizer.bypassSecurityTrustResourceUrl(todo.data.thumbnail)
+              "
+              alt="{{ todo.data.name }}"
+            />
+          </div>
+
+          <div class="card-body">
+            <div class="chipList">
+              <ng-container *ngFor="let label of todo.data.labels">
+                <span class="labels badge bg-secondary">{{ label.name }}</span>
+              </ng-container>
+            </div>
+
+            <!-- <mat-chip-list class="chipList" aria-label="Labels">
+              <ng-container *ngFor="let label of todo.data.labels">
+                <mat-chip>{{ label.name }}</mat-chip>
+              </ng-container>
+            </mat-chip-list> -->
+            <h4 class="card-title">{{ todo.data.name }}</h4>
+
+            <p class="card-text">
+              {{ todo.data.description }}
+            </p>
+          </div>
+          <div
+            class="card-footer text-muted d-flex justify-content-between bg-transparent border-top-0"
+          >
+            <div class="views">
+              <span class="icon material-icons"> calendar_today </span>
+              <span class="footer-text">{{ todo.data.due_date }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <mat-card class="card">
+        <div class="card-image-header">
+          <img
+            class="card-image"
+            mat-card-image
+            [src]="sanitizer.bypassSecurityTrustResourceUrl(todo.data.thumbnail)"
+            alt="{{ todo.data.name }}"
+          />
+        </div>
+
+        <mat-chip-list class="chipList" aria-label="Labels">
+          <ng-container *ngFor="let label of todo.data.labels">
+            <mat-chip>{{ label.name }}</mat-chip>
+          </ng-container>
+        </mat-chip-list>
+        <mat-card-header>
+          <mat-card-title>{{ todo.data.name }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            {{ todo.data.description }}
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <span class="icon material-icons"> calendar_today </span>
+          <mat-label class="label">{{ todo.data.due_date }}</mat-label>
+        </mat-card-actions>
+      </mat-card> -->
+    </ng-container>
+  </div>
+</div>
