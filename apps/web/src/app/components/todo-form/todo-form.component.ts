@@ -1,13 +1,22 @@
-import { Todo } from './../../models/todo';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Todo, STATE } from './../../models/todo';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  Input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'nxlp-todo-form',
   templateUrl: './todo-form.component.html',
   styleUrls: ['./todo-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodoFormComponent implements OnInit {
+  @Input() task: Todo;
   @Output() saveEvent = new EventEmitter<Todo>();
   form: FormGroup;
   controls;
@@ -15,17 +24,20 @@ export class TodoFormComponent implements OnInit {
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    let value = {
-      id: '',
-      name: '',
-      thumbnail: '',
-      description: '',
-      labels: '',
-      due_date: '',
-      notes: '',
-      state: 1,
-    };
-    this.configForm(value);
+    if (!this.task?.id) {
+      this.task = {
+        id: '',
+        name: '',
+        thumbnail: '',
+        description: '',
+        labels: '',
+        due_date: '',
+        notes: '',
+        state: STATE.Pending,
+      };
+    }
+
+    this.configForm(this.task);
   }
 
   configForm(value: Todo) {
@@ -37,6 +49,7 @@ export class TodoFormComponent implements OnInit {
       labels: [value.labels],
       due_date: [value.due_date],
       notes: [value.notes],
+      state: [value.state],
     });
 
     this.controls = {
@@ -52,12 +65,10 @@ export class TodoFormComponent implements OnInit {
   }
 
   handleSelectedLabels(event) {
-    console.log(event);
     this.controls.labels.patchValue(event);
   }
 
   onSubmit() {
-    console.log(this.form.value);
     this.saveEvent.emit(this.form.value);
   }
 

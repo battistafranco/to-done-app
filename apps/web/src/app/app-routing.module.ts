@@ -50,6 +50,19 @@ const routes: Routes = [
     },
     // canActivate: [AuthGuard],
   },
+  {
+    path: 'edit/:id',
+    loadChildren: () =>
+      import('./components/todo-edit/todo-edit.module').then(
+        (m) => m.TodoEditModule
+      ),
+    data: {
+      preload: false,
+      title: 'Edit Task',
+      activeSection: 'edit',
+    },
+    // canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

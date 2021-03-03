@@ -1,7 +1,12 @@
 import { ACTIONS } from './../../models/layout';
 import { TodosService } from './../../services/todos.service';
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewEncapsulation,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { LayoutService } from '../../services/layout.service';
 
@@ -10,6 +15,7 @@ import { LayoutService } from '../../services/layout.service';
   templateUrl: './add-todo.component.html',
   styleUrls: ['./add-todo.component.scss'],
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddTodoComponent implements OnInit {
   constructor(

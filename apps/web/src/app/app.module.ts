@@ -1,3 +1,4 @@
+import { MaterialModule } from './components/material/material.module';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
@@ -30,6 +31,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    MaterialModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

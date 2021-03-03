@@ -2,6 +2,8 @@ import { TodosService } from './../../services/todos.service';
 import { LayoutService } from './../../services/layout.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { STATE } from '../../models/todo';
+import { ACTIONS } from '../../models/layout';
 
 @Component({
   selector: 'tdn-navbar',
@@ -13,7 +15,14 @@ export class NavbarComponent implements OnInit {
   showEditButtons$ = this.layoutService.showEditButtons$;
   showDetailsButtons$ = this.layoutService.showDetailsButtons$;
   selectedTodo$ = this.todosService.selectedTodo$;
+  selectedAction$ = this.layoutService.selectedAction$;
   title$ = this.layoutService.title$;
+  showTaskType$ = this.todosService.showTaskType$;
+  STATE = STATE;
+  ACTIONS = ACTIONS;
+  taskTypes = STATE.Pending;
+
+  private subscriptions: { [key: string]: any } = {};
 
   constructor(
     private layoutService: LayoutService,
@@ -21,9 +30,36 @@ export class NavbarComponent implements OnInit {
     private todosService: TodosService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.subscriptions.taskTypes = this.showTaskType$.subscribe((value) => {
+      if (value !== null && value !== undefined) {
+        this.taskTypes = value;
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    Object.keys(this.subscriptions).forEach((key) =>
+      this.subscriptions[key].unsubscribe()
+    );
+  }
 
   goTo(route) {
     this.router.navigate([route]);
+  }
+
+  updateState(todo, state) {
+    this.todosService.updateState(todo.id, state);
+    this.goTo('todo');
+  }
+
+  toogleTaskTypes() {
+    if (this.taskTypes === STATE.Pending) {
+      this.todosService.setShowTasksType(STATE.Completed);
+      this.layoutService.setTitle('Completed Tasks');
+    } else {
+      this.todosService.setShowTasksType(STATE.Pending);
+      this.layoutService.setTitle('Pending Tasks');
+    }
   }
 }

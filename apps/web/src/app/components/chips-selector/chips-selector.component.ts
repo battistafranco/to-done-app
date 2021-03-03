@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 
@@ -8,13 +8,13 @@ import { MatChipInputEvent } from '@angular/material/chips';
   styleUrls: ['./chips-selector.component.scss'],
 })
 export class ChipsSelectorComponent implements OnInit {
+  @Input() labels: any[] = [];
   @Output() selectedLabelsEvent = new EventEmitter<any>();
   visible = true;
   selectable = true;
   removable = true;
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  labels: any[] = [];
 
   constructor() {}
 

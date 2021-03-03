@@ -1,3 +1,4 @@
+import { STATE } from './../models/todo';
 import { ToastrService } from 'ngx-toastr';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
@@ -14,10 +15,19 @@ export class TodosService {
     Todo
   > = this._selectedTodo$.asObservable();
 
+  private _showTaskType$ = new BehaviorSubject(STATE.Pending);
+  public readonly showTaskType$: Observable<
+    STATE
+  > = this._showTaskType$.asObservable();
+
   constructor(private afs: AngularFirestore, private toastr: ToastrService) {}
 
   setTodo(data) {
     this._selectedTodo$.next(data);
+  }
+
+  setShowTasksType(value) {
+    this._showTaskType$.next(value);
   }
 
   saveTodo(data) {
@@ -53,17 +63,18 @@ export class TodosService {
       .pipe(
         map((res) => {
           let todo = res.data();
+          todo.id = res.id;
           this.setTodo(todo);
           return todo;
         })
       );
   }
 
-  updateTodo(todoId: string, updateData: string) {
+  updateTodo(todoId: string, updateData: Todo) {
     this.afs
       .collection('todos')
       .doc(todoId)
-      .update({ todo: updateData })
+      .set(updateData, { merge: false })
       .then(() => {
         this.toastr.success('Task Updated Successfully');
       });
@@ -79,13 +90,13 @@ export class TodosService {
       });
   }
 
-  markComplete(todoId: string) {
+  updateState(todoId: string, state) {
     this.afs
       .collection('todos')
       .doc(todoId)
-      .update({ isCompleted: true })
+      .update({ state: state })
       .then(() => {
-        this.toastr.info('Task Marked Completed');
+        this.toastr.info('Task State Updated');
       });
   }
 

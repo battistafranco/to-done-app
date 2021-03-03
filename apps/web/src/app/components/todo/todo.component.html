@@ -2,6 +2,7 @@
   <div class="row col-12">
     <ng-container *ngFor="let todo of todos$ | async">
       <div
+        *ngIf="todo.data.state === (showTaskType$ | async)"
         [routerLink]="['/details', todo.data.id]"
         class="col-4 col-xs-12 col-sm-12 col-md-6 col-lg-4"
       >
@@ -23,11 +24,6 @@
               </ng-container>
             </div>
 
-            <!-- <mat-chip-list class="chipList" aria-label="Labels">
-              <ng-container *ngFor="let label of todo.data.labels">
-                <mat-chip>{{ label.name }}</mat-chip>
-              </ng-container>
-            </mat-chip-list> -->
             <h4 class="card-title">{{ todo.data.name }}</h4>
 
             <p class="card-text">
@@ -44,35 +40,6 @@
           </div>
         </div>
       </div>
-
-      <!-- <mat-card class="card">
-        <div class="card-image-header">
-          <img
-            class="card-image"
-            mat-card-image
-            [src]="sanitizer.bypassSecurityTrustResourceUrl(todo.data.thumbnail)"
-            alt="{{ todo.data.name }}"
-          />
-        </div>
-
-        <mat-chip-list class="chipList" aria-label="Labels">
-          <ng-container *ngFor="let label of todo.data.labels">
-            <mat-chip>{{ label.name }}</mat-chip>
-          </ng-container>
-        </mat-chip-list>
-        <mat-card-header>
-          <mat-card-title>{{ todo.data.name }}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>
-            {{ todo.data.description }}
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <span class="icon material-icons"> calendar_today </span>
-          <mat-label class="label">{{ todo.data.due_date }}</mat-label>
-        </mat-card-actions>
-      </mat-card> -->
     </ng-container>
   </div>
 </div>

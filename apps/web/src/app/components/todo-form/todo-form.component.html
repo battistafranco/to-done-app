@@ -13,6 +13,11 @@
 
     <div class="form-group">
       <label>Thumbnail</label>
+      <div *ngIf="controls.thumbnail.value as value">
+        <div style="text-align: center">
+          <img [src]="value" />
+        </div>
+      </div>
       <nxlp-uploader (fileUploadedEvent)="fileUploaded($event)"></nxlp-uploader>
     </div>
 
@@ -29,6 +34,7 @@
       <label>Labels</label>
       <div>
         <nxlp-chips-selector
+          [labels]="controls.labels.value"
           (selectedLabelsEvent)="handleSelectedLabels($event)"
         ></nxlp-chips-selector>
       </div>

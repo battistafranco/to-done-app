@@ -1,0 +1,9 @@
+<div class="container">
+  <ng-container *ngIf="task$ | async as task; else loading">
+    <nxlp-todo-form
+      [task]="task"
+      (saveEvent)="saveEditedTask($event)"
+    ></nxlp-todo-form>
+  </ng-container>
+  <ng-template #loading> Loading... </ng-template>
+</div>

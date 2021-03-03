@@ -24,6 +24,11 @@ export class LayoutService {
   private _title$ = new BehaviorSubject('');
   public readonly title$: Observable<string> = this._title$.asObservable();
 
+  private _selectedAction$ = new BehaviorSubject(null);
+  public readonly selectedAction$: Observable<
+    any
+  > = this._selectedAction$.asObservable();
+
   constructor() {
     this.hideButtons();
   }
@@ -50,12 +55,17 @@ export class LayoutService {
     this._title$.next(title);
   }
 
+  setSelectedAction(action: ACTIONS) {
+    this._selectedAction$.next(action);
+  }
+
   setLayout(action: ACTIONS) {
     this.hideButtons();
+    this.setSelectedAction(action);
     switch (action) {
       case ACTIONS.LIST_TODO:
         this.showAddButton(true);
-        this.setTitle('');
+        this.setTitle('Pending Tasks');
         break;
       case ACTIONS.ADD_TODO:
         this.showEditButtons(true);

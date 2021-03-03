@@ -1,4 +1,5 @@
 <nav class="navbar navbar-light bg-light">
+  <ng-container *ngIf="showTaskType$ | async"></ng-container>
   <div class="container-fluid">
     <div (click)="goTo('/')" class="navbar-brand">
       <span class="icon">
@@ -8,7 +9,16 @@
       <h5 class="text-primary brand">To Done</h5>
     </div>
     <div class="nav justify-content">
-      <h5>{{ title$ | async }}</h5>
+      <ng-container
+        *ngIf="(selectedAction$ | async) === ACTIONS.LIST_TODO; else title"
+      >
+        <mat-slide-toggle (click)="toogleTaskTypes()" color="primary"
+          ><h5>{{ title$ | async }}</h5></mat-slide-toggle
+        >
+      </ng-container>
+      <ng-template #title>
+        <h5>{{ title$ | async }}</h5>
+      </ng-template>
     </div>
     <ul class="nav justify-content-end actions">
       <ng-container *ngIf="showAddButton$ | async">
@@ -24,10 +34,10 @@
         </li>
       </ng-container>
       <ng-container *ngIf="showEditButtons$ | async">
-        <li class="nav-item">
+        <li *ngIf="this.selectedTodo$ | async as task" class="nav-item">
           <a
             routerLinkActive="active"
-            routerLink="/"
+            [routerLink]="['/details', task.id]"
             class="nav-link active btn btn-light"
             aria-current="cancel"
             >Cancel</a
@@ -53,23 +63,33 @@
         </li>
       </ng-container>
       <ng-container *ngIf="showDetailsButtons$ | async">
-        <li class="nav-item">
+        <li *ngIf="this.selectedTodo$ | async as task" class="nav-item">
           <a
             routerLinkActive="active"
-            (click)="goTo('edit')"
+            [routerLink]="['/edit', task.id]"
             class="nav-link active btn btn-light"
             aria-current="Edit"
             >Edit</a
           >
         </li>
 
-        <li class="nav-item">
+        <li *ngIf="this.selectedTodo$ | async as task" class="nav-item">
           <a
+            *ngIf="task.state === STATE.Pending"
             routerLinkActive="active"
-            (click)="completeTodo()"
+            (click)="updateState(task, STATE.Completed)"
             class="nav-link active btn btn-success"
             aria-current="complete"
             >Mark as Complete</a
+          >
+
+          <a
+            *ngIf="task.state === STATE.Completed"
+            routerLinkActive="active"
+            (click)="updateState(task, STATE.Pending)"
+            class="nav-link active btn btn-warning"
+            aria-current="complete"
+            >Mark as Uncomple</a
           >
         </li>
       </ng-container>

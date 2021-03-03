@@ -9,6 +9,7 @@ import {
   SafeUrl,
 } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { STATE } from '../../models/todo';
 
 @Component({
   selector: 'nxlp-todo',
@@ -17,6 +18,8 @@ import { Router } from '@angular/router';
 })
 export class TodoComponent implements OnInit {
   todos$ = new Observable<any>();
+  showTaskType$ = this.todosService.showTaskType$;
+
   constructor(
     private todosService: TodosService,
     private layoutService: LayoutService,
@@ -28,6 +31,8 @@ export class TodoComponent implements OnInit {
     this.layoutService.setLayout(ACTIONS.LIST_TODO);
     this.todos$ = this.todosService.loadTodos();
     this.todosService.setTodo(null);
+    this.todosService.setShowTasksType(STATE.Pending);
+    this.layoutService.setTitle('Pending Tasks');
   }
 
   goToDetails(id) {

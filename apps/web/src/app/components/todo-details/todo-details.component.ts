@@ -1,6 +1,6 @@
 import { ACTIONS } from './../../models/layout';
 import { LayoutService } from './../../services/layout.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Todo } from '../../models/todo';
 import { TodosService } from '../../services/todos.service';
@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
   selector: 'nxlp-todo-details',
   templateUrl: './todo-details.component.html',
   styleUrls: ['./todo-details.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodoDetailsComponent implements OnInit {
   task$: Observable<Todo>;
