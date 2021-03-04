@@ -4,9 +4,10 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () =>
-      import('./components/todo/todo.module').then((m) => m.TodoModule),
+    pathMatch: 'full',
+    redirectTo: '/todo',
     data: {
+      animation: 'Todos',
       preload: true,
       title: 'Todo',
       activeSection: 'todo',
@@ -18,6 +19,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./components/todo/todo.module').then((m) => m.TodoModule),
     data: {
+      animation: 'Todos',
       preload: true,
       title: 'Todo',
       activeSection: 'todo',
@@ -31,6 +33,7 @@ const routes: Routes = [
         (m) => m.AddTodoModule
       ),
     data: {
+      animation: 'Add',
       preload: false,
       title: 'Add Task',
       activeSection: 'todo',
@@ -44,6 +47,7 @@ const routes: Routes = [
         (m) => m.TodoDetailsModule
       ),
     data: {
+      animation: 'Details',
       preload: false,
       title: 'Task Details',
       activeSection: 'details',
@@ -57,6 +61,7 @@ const routes: Routes = [
         (m) => m.TodoEditModule
       ),
     data: {
+      animation: 'Edit',
       preload: false,
       title: 'Edit Task',
       activeSection: 'edit',
