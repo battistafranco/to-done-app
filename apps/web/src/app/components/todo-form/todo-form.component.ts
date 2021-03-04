@@ -1,4 +1,4 @@
-import { Todo, STATE } from './../../models/todo';
+import { Todo, STATE, newTodo } from './../../models/todo';
 import {
   Component,
   OnInit,
@@ -6,8 +6,10 @@ import {
   EventEmitter,
   Input,
   ChangeDetectionStrategy,
+  OnDestroy,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { map, debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'nxlp-todo-form',
@@ -15,29 +17,34 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./todo-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TodoFormComponent implements OnInit {
+export class TodoFormComponent implements OnInit, OnDestroy {
   @Input() task: Todo;
   @Output() saveEvent = new EventEmitter<Todo>();
   form: FormGroup;
   controls;
 
+  private subscriptions: { [key: string]: any } = {};
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    if (!this.task?.id) {
-      this.task = {
-        id: '',
-        name: '',
-        thumbnail: '',
-        description: '',
-        labels: '',
-        due_date: '',
-        notes: '',
-        state: STATE.Pending,
-      };
-    }
-
     this.configForm(this.task);
+    this.initSubscriptions();
+  }
+
+  ngOnDestroy(): void {
+    Object.keys(this.subscriptions).forEach((key) =>
+      this.subscriptions[key].unsubscribe()
+    );
+  }
+
+  initSubscriptions() {
+    this.subscriptions.form = this.form.valueChanges
+      .pipe(debounceTime(300))
+      .subscribe((value) => {
+        let todo = value;
+        todo.valid = this.form.valid;
+        this.saveEvent.emit(value);
+      });
   }
 
   configForm(value: Todo) {
@@ -66,10 +73,6 @@ export class TodoFormComponent implements OnInit {
 
   handleSelectedLabels(event) {
     this.controls.labels.patchValue(event);
-  }
-
-  onSubmit() {
-    this.saveEvent.emit(this.form.value);
   }
 
   fileUploaded(event) {

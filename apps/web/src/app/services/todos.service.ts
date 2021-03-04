@@ -30,12 +30,13 @@ export class TodosService {
     this._showTaskType$.next(value);
   }
 
-  saveTodo(data) {
+  addTodo(data) {
     this.afs
       .collection('todos')
       .add(data)
       .then((ref) => {
         this.toastr.success('New Task Saved Succesfully');
+        this.setTodo(null);
       });
   }
 
@@ -49,6 +50,7 @@ export class TodosService {
             const data = a.payload.doc.data();
             const id = a.payload.doc.id;
             data.id = id;
+            this.setTodo(null);
             return { data };
           });
         })
@@ -76,6 +78,7 @@ export class TodosService {
       .doc(todoId)
       .set(updateData, { merge: false })
       .then(() => {
+        this.setTodo(null);
         this.toastr.success('Task Updated Successfully');
       });
   }
@@ -86,6 +89,7 @@ export class TodosService {
       .doc(todoId)
       .delete()
       .then(() => {
+        this.setTodo(null);
         this.toastr.error('Task Deleted Successfully');
       });
   }

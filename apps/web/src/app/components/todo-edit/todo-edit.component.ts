@@ -34,7 +34,6 @@ export class TodoEditComponent implements OnInit {
   }
 
   saveEditedTask(editedTask) {
-    this.todosService.updateTodo(editedTask.id, editedTask);
-    this.router.navigate(['todo']);
+    this.todosService.setTodo(editedTask);
   }
 }

@@ -23,6 +23,7 @@ export class ChipsSelectorComponent implements OnInit {
   add(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
+    this.labels = Array.isArray(this.labels) ? this.labels : [];
     if ((value || '').trim()) {
       this.labels.push({ name: value.trim() });
     }

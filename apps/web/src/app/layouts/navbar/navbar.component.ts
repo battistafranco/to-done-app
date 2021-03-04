@@ -21,7 +21,7 @@ export class NavbarComponent implements OnInit {
   STATE = STATE;
   ACTIONS = ACTIONS;
   taskTypes = STATE.Pending;
-
+  selectedTodo;
   private subscriptions: { [key: string]: any } = {};
 
   constructor(
@@ -31,17 +31,25 @@ export class NavbarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.subscriptions.taskTypes = this.showTaskType$.subscribe((value) => {
-      if (value !== null && value !== undefined) {
-        this.taskTypes = value;
-      }
-    });
+    this.initSubscriptions();
   }
 
   ngOnDestroy(): void {
     Object.keys(this.subscriptions).forEach((key) =>
       this.subscriptions[key].unsubscribe()
     );
+  }
+
+  initSubscriptions() {
+    this.subscriptions.taskTypes = this.showTaskType$.subscribe((value) => {
+      if (value !== null && value !== undefined) {
+        this.taskTypes = value;
+      }
+    });
+
+    this.subscriptions.saveTodo = this.selectedTodo$.subscribe((todo) => {
+      this.selectedTodo = todo;
+    });
   }
 
   goTo(route) {
@@ -53,6 +61,16 @@ export class NavbarComponent implements OnInit {
     this.goTo('todo');
   }
 
+  saveTodo() {
+    if (this.selectedTodo?.id && this.selectedTodo?.valid) {
+      this.todosService.updateTodo(this.selectedTodo.id, this.selectedTodo);
+      this.goTo('todo');
+    } else if (this.selectedTodo?.valid) {
+      this.todosService.addTodo(this.selectedTodo);
+      this.goTo('todo');
+    }
+  }
+
   toogleTaskTypes() {
     if (this.taskTypes === STATE.Pending) {
       this.todosService.setShowTasksType(STATE.Completed);
@@ -61,5 +79,10 @@ export class NavbarComponent implements OnInit {
       this.todosService.setShowTasksType(STATE.Pending);
       this.layoutService.setTitle('Pending Tasks');
     }
+  }
+
+  deleteTodo(id) {
+    this.todosService.deleteTodo(id);
+    this.goTo('todo');
   }
 }

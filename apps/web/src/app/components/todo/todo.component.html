@@ -9,12 +9,18 @@
         <div class="card">
           <div class="card-wrapper">
             <img
+              *ngIf="todo.data.thumbnail; else imageNotFound"
               class="card-img"
               [src]="
                 sanitizer.bypassSecurityTrustResourceUrl(todo.data.thumbnail)
               "
               alt="{{ todo.data.name }}"
             />
+            <ng-template #imageNotFound>
+              <div style="text-align: center">
+                <span>Image Not Found </span>
+              </div>
+            </ng-template>
           </div>
 
           <div class="card-body">

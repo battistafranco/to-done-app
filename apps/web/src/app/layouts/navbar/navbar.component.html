@@ -33,26 +33,31 @@
         </li>
       </ng-container>
       <ng-container *ngIf="showEditButtons$ | async">
-        <li *ngIf="this.selectedTodo$ | async as task" class="nav-item">
-          <a
-            routerLinkActive="active"
-            [routerLink]="['/details', task.id]"
-            class="nav-link active btn btn-light"
-            aria-current="cancel"
-            >Cancel</a
-          >
-        </li>
-        <li *ngIf="selectedTodo$ | async" class="nav-item">
-          <a
-            routerLinkActive="active"
-            (click)="deleteTodo()"
-            class="nav-link active btn btn-danger"
-            aria-current="delete"
-            >Delete</a
-          >
-        </li>
+        <ng-container *ngIf="this.selectedTodo$ | async as task">
+          <li class="nav-item">
+            <a
+              *ngIf="task.id"
+              routerLinkActive="active"
+              [routerLink]="['/details', task.id]"
+              class="nav-link active btn btn-light"
+              aria-current="cancel"
+              >Cancel</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              *ngIf="task.id"
+              routerLinkActive="active"
+              (click)="deleteTodo(task.id)"
+              class="nav-link active btn btn-danger"
+              aria-current="delete"
+              >Delete</a
+            >
+          </li>
+        </ng-container>
         <li class="nav-item">
           <a
+            [disabled]="!task?.valid"
             routerLinkActive="active"
             (click)="saveTodo()"
             class="nav-link active btn btn-success"

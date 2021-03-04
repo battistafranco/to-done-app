@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { LayoutService } from '../../services/layout.service';
+import { newTodo, Todo } from '../../models/todo';
 
 @Component({
   selector: 'nxlp-add-todo',
@@ -18,6 +19,7 @@ import { LayoutService } from '../../services/layout.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddTodoComponent implements OnInit {
+  task: Todo;
   constructor(
     private todosService: TodosService,
     private router: Router,
@@ -26,12 +28,11 @@ export class AddTodoComponent implements OnInit {
 
   ngOnInit() {
     this.layoutService.setLayout(ACTIONS.ADD_TODO);
-    this.todosService.setTodo(null);
+    this.task = newTodo();
+    this.todosService.setTodo(this.task);
   }
 
   addNewTask(task) {
-    console.log(task);
-    this.todosService.saveTodo(task);
-    this.router.navigate(['/']);
+    this.todosService.setTodo(task);
   }
 }

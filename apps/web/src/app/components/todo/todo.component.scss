@@ -12,6 +12,7 @@
 
 .chipList {
   margin: 5px;
+  min-height: 30px;
 }
 
 // .icon {
@@ -38,6 +39,7 @@
 .card-wrapper {
   overflow: hidden;
   max-height: 100px;
+  min-height: 100px;
 }
 
 .card-title {
@@ -66,6 +68,7 @@
   color: grey;
   font-size: smaller;
   min-height: 100px;
+  max-height: 100px;
 }
 
 .footer-text {
