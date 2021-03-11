@@ -73,7 +73,7 @@ export class LayoutService {
         break;
       case ACTIONS.DETAILS_TODO:
         this.showDetailsButtons(true);
-        this.setTitle('Task Details');
+        // this.setTitle('Task Details');
         break;
       case ACTIONS.EDIT_TODO:
         this.showEditButtons(true);

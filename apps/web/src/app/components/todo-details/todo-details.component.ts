@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Todo } from '../../models/todo';
 import { TodosService } from '../../services/todos.service';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'nxlp-todo-details',
@@ -14,10 +16,12 @@ import { Observable } from 'rxjs';
 })
 export class TodoDetailsComponent implements OnInit {
   task$: Observable<Todo>;
+  private subscriptions: { [key: string]: any } = {};
   constructor(
     private route: ActivatedRoute,
     private todosService: TodosService,
-    private layoutService: LayoutService
+    private layoutService: LayoutService,
+    public sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
@@ -27,7 +31,16 @@ export class TodoDetailsComponent implements OnInit {
     this.setLayout();
   }
 
+  ngOnDestroy(): void {
+    Object.keys(this.subscriptions).forEach((key) =>
+      this.subscriptions[key].unsubscribe()
+    );
+  }
+
   setLayout() {
     this.layoutService.setLayout(ACTIONS.DETAILS_TODO);
+    this.subscriptions.task = this.task$.subscribe((value) => {
+      this.layoutService.setTitle(value.name);
+    });
   }
 }

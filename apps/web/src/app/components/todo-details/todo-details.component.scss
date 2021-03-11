@@ -1,0 +1,50 @@
+.image {
+  height: 250px;
+  border-radius: 5px;
+}
+
+label {
+  font-size: small;
+  font-weight: bold;
+  color: lightseagreen;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-bottom: 7px;
+  padding-top: 10px;
+}
+
+.labels {
+  display: flex;
+}
+
+.chip {
+  margin-left: 5px;
+}
+
+p {
+  margin-left: 10px;
+  font-size: smaller;
+  margin-bottom: 10px;
+}
+
+.card-wrapper {
+  overflow: hidden;
+  max-height: 100px;
+  min-height: 100px;
+}
+
+.card-img {
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  margin-bottom: 10px;
+}
+
+.card {
+  width: 550px;
+  padding: 40px;
+  margin: auto;
+  margin-top: 40px;
+}
+
+.icon {
+  vertical-align: bottom;
+}

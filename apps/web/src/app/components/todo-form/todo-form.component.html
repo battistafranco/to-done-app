@@ -1,7 +1,7 @@
 <div class="container">
   <form [formGroup]="form" novalidate>
     <div class="form-group">
-      <label>Name</label>
+      <label>Task Name *</label>
       <input type="text" class="form-control" required formControlName="name" />
       <div
         *ngIf="controls.name.touched && controls.name.invalid"
@@ -13,7 +13,7 @@
 
     <div class="form-group">
       <label>Thumbnail</label>
-      <div *ngIf="controls.thumbnail.value as value">
+      <div *ngIf="!hidePreview && controls.thumbnail.value as value">
         <div style="text-align: center">
           <img [src]="value" />
         </div>
@@ -47,7 +47,12 @@
 
     <div class="form-group">
       <label>Notes</label>
-      <input type="text" class="form-control" formControlName="notes" />
+
+      <textarea
+        type="text"
+        class="form-control"
+        formControlName="notes"
+      ></textarea>
     </div>
   </form>
 </div>

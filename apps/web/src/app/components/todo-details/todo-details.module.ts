@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TodoDetailsComponent } from './todo-details.component';
 import { RouterModule } from '@angular/router';
+import { MaterialModule } from '../material/material.module';
 
 @NgModule({
   declarations: [TodoDetailsComponent],
@@ -13,6 +14,7 @@ import { RouterModule } from '@angular/router';
         component: TodoDetailsComponent,
       },
     ]),
+    MaterialModule,
   ],
   exports: [TodoDetailsComponent],
 })

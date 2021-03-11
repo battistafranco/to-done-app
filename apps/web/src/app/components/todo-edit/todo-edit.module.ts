@@ -1,3 +1,4 @@
+import { MaterialModule } from './../material/material.module';
 import { TodoFormModule } from './../todo-form/todo-form.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -14,6 +15,7 @@ import { RouterModule } from '@angular/router';
         component: TodoEditComponent,
       },
     ]),
+    MaterialModule,
     TodoFormModule,
   ],
   exports: [TodoEditComponent],

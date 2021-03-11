@@ -21,6 +21,7 @@ export class TodoFormComponent implements OnInit, OnDestroy {
   @Input() task: Todo;
   @Output() saveEvent = new EventEmitter<Todo>();
   form: FormGroup;
+  hidePreview = false;
   controls;
 
   private subscriptions: { [key: string]: any } = {};
@@ -77,5 +78,6 @@ export class TodoFormComponent implements OnInit, OnDestroy {
 
   fileUploaded(event) {
     this.controls.thumbnail.patchValue(event);
+    this.hidePreview = true;
   }
 }

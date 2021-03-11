@@ -1,5 +1,60 @@
 <div class="container">
   <ng-container *ngIf="task$ | async as task">
-    {{ task | json }}
+    <div class="container">
+      <mat-card class="card">
+        <div class="form-group">
+          <label>Thumbnail</label>
+
+          <div class="card-wrapper">
+            <img
+              *ngIf="task.thumbnail; else imageNotFound"
+              class="card-img"
+              [src]="sanitizer.bypassSecurityTrustResourceUrl(task.thumbnail)"
+              alt="{{ task.name }}"
+            />
+            <ng-template #imageNotFound>
+              <div style="text-align: center">
+                <span>Image Not Found </span>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Description</label>
+          <p>
+            {{ task.description }}
+          </p>
+        </div>
+
+        <div>
+          <label>Labels</label>
+          <div class="labels">
+            <mat-chip-list
+              *ngFor="let label of task.labels"
+              aria-label="Labels"
+              class="label-list"
+            >
+              <mat-chip class="chip"> {{ label.name }}</mat-chip>
+            </mat-chip-list>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Due Date</label>
+          <p>
+            <span class="icon material-icons"> calendar_today </span>
+            {{ task.due_date | date }}
+          </p>
+        </div>
+
+        <div class="form-group">
+          <label>Notes</label>
+          <p>
+            {{ task.notes }}
+          </p>
+        </div>
+      </mat-card>
+    </div>
   </ng-container>
 </div>

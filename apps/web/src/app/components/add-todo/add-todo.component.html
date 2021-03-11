@@ -1,6 +1,8 @@
 <div class="container">
-  <nxlp-todo-form
-    [task]="task"
-    (saveEvent)="addNewTask($event)"
-  ></nxlp-todo-form>
+  <mat-card class="card">
+    <nxlp-todo-form
+      [task]="task"
+      (saveEvent)="addNewTask($event)"
+    ></nxlp-todo-form>
+  </mat-card>
 </div>
