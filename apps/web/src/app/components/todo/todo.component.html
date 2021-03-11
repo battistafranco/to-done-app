@@ -6,11 +6,11 @@
         [routerLink]="['/details', todo.data.id]"
         class="col-4 col-xs-12 col-sm-12 col-md-6 col-lg-4"
       >
-        <div class="card">
-          <div class="card-wrapper">
+        <div class="tile-card">
+          <div class="tile-card-wrapper">
             <img
               *ngIf="todo.data.thumbnail; else imageNotFound"
-              class="card-img"
+              class="tile-card-img"
               [src]="
                 sanitizer.bypassSecurityTrustResourceUrl(todo.data.thumbnail)
               "
@@ -23,23 +23,23 @@
             </ng-template>
           </div>
 
-          <div class="card-body">
+          <div class="tile-card-body">
             <div class="chipList">
               <ng-container *ngFor="let label of todo.data.labels">
                 <span class="labels badge bg-secondary">{{ label.name }}</span>
               </ng-container>
             </div>
 
-            <h4 class="card-title">{{ todo.data.name }}</h4>
+            <h4 class="tile-card-title">{{ todo.data.name }}</h4>
 
-            <div class="card-text">
+            <div class="tile-card-text">
               <p class="description">
                 {{ todo.data.description }}
               </p>
             </div>
           </div>
           <div
-            class="card-footer text-muted d-flex justify-content-between bg-transparent border-top-0"
+            class="tile-card-footer text-muted d-flex justify-content-between bg-transparent border-top-0"
           >
             <div class="views">
               <span class="icon material-icons"> calendar_today </span>

@@ -3,18 +3,18 @@
   min-height: 30px;
 }
 
-.card-img {
+.tile-card-img {
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
 }
 
-.card-wrapper {
+.tile-card-wrapper {
   overflow: hidden;
   max-height: 100px;
   min-height: 100px;
 }
 
-.card-title {
+.tile-card-title {
   margin-bottom: 0.3rem;
   font-size: medium;
 }
@@ -28,7 +28,7 @@
   margin-left: 1rem;
 }
 
-.card-footer {
+.tile-card-footer {
   font-size: 0.8rem;
 }
 
@@ -36,7 +36,7 @@
   margin: 3px;
 }
 
-.card-text {
+.tile-card-text {
   color: grey;
   font-size: smaller;
   min-height: 100px;
@@ -48,7 +48,7 @@
   margin-left: 5px;
 }
 
-.card {
+.tile-card {
   margin: auto;
   margin-top: 40px;
 }
