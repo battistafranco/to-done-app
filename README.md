@@ -1,6 +1,13 @@
-## Initial
+## ng-To-Done PWA
 
-Start the proyect!
+Welcome to ng-To-Done PWA!
+This PWA allow you to handle a ToDo list and integrate it with Firebase.
+You can try it here: https://ng-to-done.web.app/
+
+### [Firebase](https://firebase.google.com/docs/web/setup)
+
+At first you need to setup a Firebase app, get your credentials and replace it in the environment files.
+You can check it here: https://firebase.google.com/docs/web/setup
 
 ### Install Dependencies
 

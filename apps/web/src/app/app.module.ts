@@ -14,6 +14,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { environment } from '../environments/environment';
 import { DropzoneDirective } from './directives/dropzone.directive';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [AppComponent, NavbarComponent],
@@ -32,6 +33,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [],
   bootstrap: [AppComponent],
